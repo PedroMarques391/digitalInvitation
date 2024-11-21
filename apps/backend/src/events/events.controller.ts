@@ -1,17 +1,19 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { complementaryEvent, complementaryGuest, Date, Event, events, Guest, Id } from "core"
+import { EventPrisma } from './event.prisma';
 
 
 @Controller('events')
 export class EventsController {
+    constructor(readonly repository: EventPrisma) { }
 
     @Post()
     async saveEvent(@Body() event: Event) {
-        const newEvent = events.find((item) => item.alias === event.alias)
-        if (newEvent && newEvent.id !== event.id) throw new Error("Alias já cadastrado!")
+        const hasEvent = await this.repository.searchByAlias(event.id)
+        if (hasEvent && hasEvent.id !== event.id) throw new Error("Ops, Já existe um evento com essa Alias.")
 
         const eventComplete = complementaryEvent(this.deserialize(event))
-        events.push(eventComplete)
+        await this.repository.save(eventComplete)
 
     }
 
@@ -20,39 +22,44 @@ export class EventsController {
         @Param("alias")
         alias: string,
         @Body() guest: Guest) {
-        const event = events.find((event) => event.alias === alias)
+        const event = await this.repository.searchByAlias(alias)
         if (!event) throw new Error("Evento não encotrado!")
 
-        event.guests.push(complementaryGuest(guest))
-        return this.serialize(event)
+        const completeGuest = complementaryGuest(this.deserialize(guest))
+
+        await this.repository.saveGuest(event, completeGuest)
     }
 
     @Post("access")
     async accessEvent(@Body() datas: { id: string, password: string }) {
-        const event = events.find((event) => event.id === datas.id && event.password === datas.password)
-        if (!event) throw new Error("A senha não corresponde ao evento!");
+        const event = await this.repository.searchById(datas.id)
+        if (!event) throw new Error("Evento não encontrado.");
+        if (event.password !== datas.password) throw new Error("A senha não corresponde ao evento!");
         return this.serialize(event)
     }
 
     @Get()
     async searchEvents() {
+        const events = await this.repository.searchAll()
         return events.map(this.serialize)
     }
 
     @Get(":idOrAlias")
     async searchEvent(@Param("idOrAlias") idOrAlias: string) {
+        let event: Event
         if (Id.isValideId(idOrAlias)) {
-            return this.serialize(events.find(event => event.id === idOrAlias))
+            event = await this.repository.searchById(idOrAlias, true)
         }
         if (!Id.isValideId(idOrAlias)) {
-            return this.serialize(events.find(event => event.alias === idOrAlias))
+            event = await this.repository.searchByAlias(idOrAlias, true)
         }
+        return this.serialize(event)
 
     }
 
     @Get("validate/:alias/:id")
     async aliasIsValid(@Param("alias") alias: string, @Param("id") id: string) {
-        const event = events.find((event) => event.alias === alias)
+        const event = await this.repository.searchByAlias(alias)
         return { valid: !event || event.id === id }
     }
 
