@@ -1,6 +1,6 @@
 
 
-import { Id, Password } from "@/core/shared";
+import { Id, Password } from "../../shared";
 import Event from "../model/Event";
 import validateEvent from "./validateEvent";
 

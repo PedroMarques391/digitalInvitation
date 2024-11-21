@@ -1,4 +1,4 @@
-import { Event, Guest } from '@/core'
+import { Event, Guest } from 'core'
 import React from 'react'
 import EventInfo from './EventInfo'
 import Qrcode from './Qrcode'

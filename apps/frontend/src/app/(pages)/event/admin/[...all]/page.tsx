@@ -2,8 +2,8 @@
 
 import EventDashboard from "@/components/event/EventDashboard";
 import EventFormPassword from "@/components/event/EventFormPassword";
-import { Event, Guest } from "@/core";
-import events from "@/core/constants/events";
+import { Event, Guest } from "core";
+import events from "core/constants/events";
 import { use, useEffect, useState } from "react";
 
 

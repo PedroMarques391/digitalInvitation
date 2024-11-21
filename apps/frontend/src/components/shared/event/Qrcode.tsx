@@ -1,4 +1,4 @@
-import { Event } from '@/core'
+import { Event } from 'core'
 import React from 'react'
 import QRCode from 'react-qr-code'
 

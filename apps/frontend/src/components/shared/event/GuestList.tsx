@@ -1,4 +1,4 @@
-import { Guest } from '@/core'
+import { Guest } from 'core'
 import React from 'react'
 import GuestItem from './GuestItem'
 
