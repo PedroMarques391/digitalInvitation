@@ -1,5 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { complementaryEvent, complementaryGuest, Date, Event, events, Guest, Id } from "core"
+import { Body, Controller, Get, HttpException, Param, Post } from '@nestjs/common';
+import {
+    complementaryEvent,
+    complementaryGuest,
+    Date, Event,
+    Guest, Id
+} from "core"
 import { EventPrisma } from './event.prisma';
 
 
@@ -10,7 +15,7 @@ export class EventsController {
     @Post()
     async saveEvent(@Body() event: Event) {
         const hasEvent = await this.repository.searchByAlias(event.id)
-        if (hasEvent && hasEvent.id !== event.id) throw new Error("Ops, Já existe um evento com essa Alias.")
+        if (hasEvent && hasEvent.id !== event.id) throw new HttpException("Ops, Já existe um evento com essa Alias.", 400)
 
         const eventComplete = complementaryEvent(this.deserialize(event))
         await this.repository.save(eventComplete)
@@ -23,7 +28,7 @@ export class EventsController {
         alias: string,
         @Body() guest: Guest) {
         const event = await this.repository.searchByAlias(alias)
-        if (!event) throw new Error("Evento não encotrado!")
+        if (!event) throw new HttpException("Evento não encotrado!", 400)
 
         const completeGuest = complementaryGuest(this.deserialize(guest))
 
@@ -33,8 +38,8 @@ export class EventsController {
     @Post("access")
     async accessEvent(@Body() datas: { id: string, password: string }) {
         const event = await this.repository.searchById(datas.id)
-        if (!event) throw new Error("Evento não encontrado.");
-        if (event.password !== datas.password) throw new Error("A senha não corresponde ao evento!");
+        if (!event) throw new HttpException("Evento não encontrado.", 400);
+        if (event.password !== datas.password) throw new HttpException("A senha não corresponde ao evento!", 400);
         return this.serialize(event)
     }
 
