@@ -7,6 +7,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import EventInformations from '@/components/event/EventInformations'
 import Statistics from '@/components/shared/Statistics'
 import { Guest } from 'core'
+import SectionTitle from '@/components/shared/SectionTitle'
+import GuestList from '@/components/event/GuestList'
 
 export default function Details(): React.JSX.Element {
     const { event, selectEvent } = useEvent()
@@ -48,6 +50,10 @@ export default function Details(): React.JSX.Element {
                             value={totalGuests}
                             text="Acompanhantes" />
                     </View>
+                    <SectionTitle text='Presenças Confirmadas: ' />
+                    <GuestList guests={presents} />
+                    <SectionTitle text='Ausências Confirmadas: ' />
+                    <GuestList guests={absent} />
                 </ScrollView>
             </SafeAreaView>
         ) :
