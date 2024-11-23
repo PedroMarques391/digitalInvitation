@@ -4,7 +4,7 @@
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/triangulo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splash.png",
+        "foregroundImage": "./assets/images/triangulo.png",
         "backgroundColor": "#ffffff"
       }
     },
@@ -31,6 +31,14 @@
           "imageWidth": 200,
           "resizeMode": "cover",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow DigitalInvitation to access your camera",
+          "microphonePermission": "Allow DigitalInvitation to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ],

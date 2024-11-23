@@ -14,7 +14,7 @@ export const EventContext = createContext({} as IEventContextProps)
 
 const EventProvider = ({ children }: { children: ReactNode }) => {
     const [event, setEvent] = useState<Event | null>(null)
-    const [events, setEvents] = useState<Event[]>(mockEvents)
+    const [events, setEvents] = useState<Event[]>([])
 
     function selectEvent(id: string) {
         const event = events.find((event) => event.id === id)
@@ -26,7 +26,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     }
 
     function deleteEvent(id: string) {
-        const newEvents = events.filter((item) => item.id === id)
+        const newEvents = events.filter((item) => item.id !== id)
         setEvents(newEvents)
     }
 
