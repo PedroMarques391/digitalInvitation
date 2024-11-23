@@ -9,8 +9,6 @@ type TabOptions = {
 };
 
 const TabsLayout: React.FC = () => {
-
-
     function tabOptions({ label, icon }: TabOptions): any {
         return {
             headerShown: false,
