@@ -37,7 +37,7 @@ export class EventsController {
 
     @Post("access")
     async accessEvent(@Body() datas: { id: string, password: string }) {
-        const event = await this.repository.searchById(datas.id)
+        const event = await this.repository.searchById(datas.id, true)
         if (!event) throw new HttpException("Evento não encontrado.", 400);
         if (event.password !== datas.password) throw new HttpException("A senha não corresponde ao evento!", 400);
         return this.serialize(event)

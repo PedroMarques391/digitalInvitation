@@ -14,6 +14,17 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="(stack)/qrcode"
+          options={{
+            title: "Leitor De Qrcode",
+            headerBackTitle: "Voltar",
+            headerTintColor: "#fff",
+            headerStyle: {
+              backgroundColor: colors.zinc[900]
+            }
+          }}
+        />
+        <Stack.Screen
           name="(stack)/event/[id]"
           options={{
             title: "Detalhes",

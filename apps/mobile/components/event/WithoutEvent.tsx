@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import { bgZinc800, bgZinc950, centerGrow, fontBlack, gapY4, itemsCenter, py4, roundedLg, text3Xl, textLg, textWhite, textZinc400, wFull } from '@/style'
+import { bgZinc950, fontBlack, gapY4, itemsCenter, py4, roundedLg, text3Xl, textLg, textWhite, textZinc400, wFull } from '@/style'
 
 export default function WithoutEvent(): React.JSX.Element {
     return (

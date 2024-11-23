@@ -1,5 +1,7 @@
-import { createContext, ReactNode, useState } from "react"
+import { createContext, ReactNode, useEffect, useState } from "react"
 import { Event, events as mockEvents } from "core"
+import useApi from "../hooks/useApi"
+import useLocalStorage from "../hooks/useLocalStorage"
 
 
 interface IEventContextProps {
@@ -14,21 +16,58 @@ export const EventContext = createContext({} as IEventContextProps)
 
 const EventProvider = ({ children }: { children: ReactNode }) => {
     const [event, setEvent] = useState<Event | null>(null)
+    const { saveItem, getItem } = useLocalStorage()
     const [events, setEvents] = useState<Event[]>([])
+    const { httpPOST } = useApi()
 
-    function selectEvent(id: string) {
+    async function selectEvent(id: string) {
         const event = events.find((event) => event.id === id)
-        setEvent(event || null)
+        const loadedEvent = await loadEventByLocalStorage(id, event?.password || "null")
+        setEvent(loadedEvent || null)
     }
 
-    function addEventByQrCode(qrcorde: string) {
+    async function addEventByQrCode(qrcorde: string) {
+        try {
+            const idAndPassword: { id: string, password: string } = JSON.parse(qrcorde)
 
+            const event = await httpPOST("events/access", idAndPassword)
+            if (!event) {
+                return deleteEvent(idAndPassword.id)
+            }
+
+            const newEvents = events.filter((event) => event.id !== idAndPassword.id)
+
+            newEvents.push(event)
+
+            saveItem("event", newEvents)
+            setEvents(newEvents)
+
+        } catch (error: any) {
+            alert(JSON.stringify(error))
+        }
     }
 
     function deleteEvent(id: string) {
         const newEvents = events.filter((item) => item.id !== id)
+        saveItem("events", newEvents)
         setEvents(newEvents)
     }
+
+    async function loadEventByLocalStorage(id: string, password: string) {
+        const event = await httpPOST("events/access", { id, password })
+        return event
+    }
+
+    async function loadEventsByLocalStorage() {
+        const events = await getItem("events")
+        events.array.forEach((event: Event) => {
+            loadEventByLocalStorage(event.id, event.password)
+        });
+    }
+
+    useEffect(() => {
+        loadEventsByLocalStorage()
+    }, [])
 
     return (
         <EventContext.Provider value={{
