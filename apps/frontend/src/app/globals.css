@@ -54,4 +54,8 @@ body {
   .button.green:hover {
     @apply bg-green-600 text-white transition-all duration-700
   }
+
+  input {
+    color-scheme: dark;
+  }
 }

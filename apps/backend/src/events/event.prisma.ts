@@ -6,7 +6,8 @@ import { PrismaProvider } from 'src/db/prisma.provider';
 export class EventPrisma {
     constructor(readonly prisma: PrismaProvider) { }
 
-    save(event: Event) {
+    saveEvent(event: Event) {
+        console.log("prisma.event", event)
         return this.prisma.event.create({
             data: {
                 ...(event as any),
@@ -49,7 +50,7 @@ export class EventPrisma {
                 id: true,
                 alias: true,
                 description: true,
-                backgroundIImage: true,
+                backgroundImage: true,
                 image: true,
                 date: true,
                 name: true,

@@ -35,7 +35,7 @@ const Window = ({ children, backgroundImage, image, label, title }: IWindowProps
                         <span className='text-sm text-zinc-300'>{label ?? "Detalhes do evento?"}</span>
                         <span className='text-4xl text-zinc-300 font-bold'>{title ?? "titulo do evento?"}</span>
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 flex justify-end">
                         <Image
                             src="/elementos.png"
                             alt="Elementos decorativos"

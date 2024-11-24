@@ -1,47 +1,47 @@
-import { useCallback } from "react"
+import { useCallback } from "react";
 
-const URL_BASE = process.env.NEXT_PUBLIC_API_URL
+const urlBase = process.env.NEXT_PUBLIC_API_URL;
 
+export default function useAPI() {
+    const httpGet = useCallback(async function (path: string) {
+        const uri = path.startsWith("/") ? path : `/${path}`;
+        const URL = `${urlBase}${uri}`;
 
-export default function useApi() {
-    const httpGET = useCallback(
-        async function (path: string) {
-            const URI = path.startsWith("/") ? path : `/${path}`
-            const URL = `${URL_BASE}${URI}`
+        const res = await fetch(URL);
+        return stractData(res);
+    }, []);
 
-            const response = await fetch(URL)
-            return extractData(response)
-        }, [])
-    const httpPOST = useCallback(
-        async function (path: string, body?: any) {
-            const URI = path.startsWith("/") ? path : `/${path}`
-            const URL = `${URL_BASE}${URI}`
+    const httpPost = useCallback(async function (path: string, body?: any) {
+        const uri = path.startsWith("/") ? path : `/${path}`;
+        const URL = `${urlBase}${uri}`;
 
-            const response = await fetch(URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: body ? JSON.stringify(body) : null
-            })
+        console.log(body)
+        const res = await fetch(URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body ? JSON.stringify(body) : null,
+        });
+        return stractData(res);
+    }, []);
 
-            return extractData(response)
-        }, [])
+    async function stractData(reposta: Response) {
+        let conteudo: any;
 
-
-
-    function extractData(response: Response) {
-        let content: any
         try {
-            content = response.json()
-
-        } catch (error: any) {
-            if (!response.ok) {
-                throw new Error(`Ocorreu um erro inesperado com status ${response.status} ${error}`)
+            conteudo = await reposta.json();
+        } catch (error) {
+            if (!reposta.ok) {
+                throw new Error(
+                    `Ocorreu um erro inesperado com status ${reposta.status}.`
+                );
             }
-            if (!response.ok) throw new Error(content)
-            return null
+            return null;
         }
-
-        return content
+        if (!reposta.ok) throw conteudo;
+        return conteudo;
     }
-    return { httpGET, httpPOST }
+
+    return { httpGet, httpPost };
 }

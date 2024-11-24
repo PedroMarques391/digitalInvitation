@@ -1,4 +1,4 @@
-export default class newDate {
+export default class Data {
   static format(data: Date): string {
     const pad = (n: number) => n.toString().padStart(2, "0");
 

@@ -11,17 +11,17 @@ datasource db {
 }
 
 model Event {
-  id               String   @id @default(uuid())
-  alias            String   @unique
-  name             String
-  password         String
-  date             DateTime
-  place            String
-  description      String
-  image            String
-  backgroundIImage String
-  publicExpected   Int
-  guests           Guest[]
+  id              String   @id @default(uuid())
+  alias           String   @unique
+  name            String
+  password        String
+  date            DateTime
+  place           String
+  description     String
+  image           String
+  backgroundImage String
+  publicExpected  Int
+  guests          Guest[]
 
   @@map("events")
 }

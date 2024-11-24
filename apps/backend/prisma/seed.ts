@@ -15,7 +15,7 @@ async function seed() {
                 place: event.place,
                 description: event.description,
                 image: event.image,
-                backgroundIImage: event.backgroundImage,
+                backgroundImage: event.backgroundImage,
                 publicExpected: event.publicExpected,
                 guests: {
                     create: event.guests.map((guest) => ({

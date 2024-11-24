@@ -7,6 +7,7 @@ import GuestList from './GuestList'
 
 export interface IEventDashboardProps {
     event: Event
+    hiddenName?: boolean
     className?: string,
     presents?: Guest[],
     absents?: Guest[]

@@ -13,12 +13,12 @@ export default function complementaryEvent(
     throw new Error(erros.join("\n"));
   }
 
-  const Event: Event = {
+  const event: Event = {
     ...partialEvent,
     id: partialEvent.id ?? Id.new(),
-    senha: partialEvent.password ?? Password.new(20),
-    publicoEsperado: +(partialEvent.publicExpected ?? 1),
+    password: partialEvent.password ?? Password.new(20),
+    publicExpected: +(partialEvent.publicExpected ?? 1),
   } as Event;
 
-  return Event;
+  return event;
 }

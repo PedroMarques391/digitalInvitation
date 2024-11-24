@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpException, Param, Post } from '@nestjs/commo
 import {
     complementaryEvent,
     complementaryGuest,
-    Date, Event,
+    Data, Event,
     Guest, Id
 } from "core"
 import { EventPrisma } from './event.prisma';
@@ -14,11 +14,14 @@ export class EventsController {
 
     @Post()
     async saveEvent(@Body() event: Event) {
-        const hasEvent = await this.repository.searchByAlias(event.id)
-        if (hasEvent && hasEvent.id !== event.id) throw new HttpException("Ops, Já existe um evento com essa Alias.", 400)
+        const registeredEvent = await this.repository.searchByAlias(event.alias)
+        if (registeredEvent && registeredEvent.id !== event.id) {
+            throw new HttpException("Ops, Já existe um evento com essa Alias.", 400)
+        }
 
         const eventComplete = complementaryEvent(this.deserialize(event))
-        await this.repository.save(eventComplete)
+        await this.repository.saveEvent(eventComplete)
+        return this.serialize(eventComplete)
 
     }
 
@@ -72,15 +75,17 @@ export class EventsController {
         if (!event) return null
         return {
             ...event,
-            date: Date.format(event.date)
+            date: Data.format(event.date)
         }
     }
 
+
     private deserialize(event: any): Event {
-        if (!event) return null
+        if (!event) return null;
         return {
             ...event,
-            date: Date.parser(event.date)
-        } as Event
+            date: Data.parser(event.date),
+        } as Event;
     }
+
 }

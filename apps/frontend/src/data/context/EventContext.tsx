@@ -1,6 +1,6 @@
 "use client"
 
-import { createEmptyEvent, createEmptyGuest, Date, Event, Guest } from "core"
+import { createEmptyEvent, createEmptyGuest, Data, Event, Guest } from "core"
 import { createContext, ReactNode, useCallback, useEffect, useState } from "react"
 import useApi from "../hooks/useApi"
 import { useRouter } from "next/navigation"
@@ -21,7 +21,7 @@ export interface IEventContextProps {
 const EventContext = createContext({} as IEventContextProps)
 
 const EventProvider = ({ children }: { children: ReactNode }) => {
-    const { httpGET, httpPOST } = useApi()
+    const { httpGet, httpPost } = useApi()
     const [isValidAlias, setIsValidAlias] = useState<boolean>(true)
     const [event, setEvent] = useState<Partial<Event>>(createEmptyEvent())
     const [guest, setGuest] = useState<Partial<Guest>>(createEmptyGuest())
@@ -30,42 +30,42 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
 
     const saveEvent = useCallback(async function () {
         try {
-            const createdEvent = await httpPOST("/events", event)
-            router.push(`/events/success`)
+            const newEvent = await httpPost("/events", event)
+            router.push(`/event/success`)
             setEvent({
-                ...event,
-                date: Date.parser(createdEvent.date)
+                ...newEvent,
+                date: Data.parser(newEvent.date)
             })
         } catch (error) {
             console.log(error)
         }
-    }, [event, httpPOST, router])
+    }, [event, httpPost, router])
 
     const loadEvent = useCallback(async function (idOrAlias: string) {
         try {
-            const event = await httpGET(`/events/${idOrAlias}`)
+            const event = await httpGet(`/events/${idOrAlias}`)
             setEvent({
                 ...event,
-                date: Date.parser(event.date)
+                date: Data.parser(event.date)
             })
         } catch (error) {
             console.log(error)
         }
-    }, [httpGET, setEvent])
+    }, [httpGet, setEvent])
 
     const addGuest = useCallback(async function () {
-        await httpPOST(`/events/${event.alias}/guests`, guest)
+        await httpPost(`/events/${event.alias}/guests`, guest)
         router.push("/invitation/thanks")
-    }, [httpPOST, event, router, guest])
+    }, [httpPost, event, router, guest])
 
     const validateAlias = useCallback(async function () {
         try {
-            const { valid } = await httpGET(`/events/validate/${event.alias}/${event.id}`)
+            const { valid } = await httpGet(`/events/validate/${event.alias}/${event.id}`)
             setIsValidAlias(valid)
         } catch (error) {
             console.log(error)
         }
-    }, [httpGET, event])
+    }, [httpGet, event])
 
     useEffect(() => {
         if (event.alias) validateAlias()

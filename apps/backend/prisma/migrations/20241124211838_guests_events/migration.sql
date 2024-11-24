@@ -8,7 +8,7 @@ CREATE TABLE "events" (
     "place" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "image" TEXT NOT NULL,
-    "backgroundIImage" TEXT NOT NULL,
+    "backgroundImage" TEXT NOT NULL,
     "publicExpected" INTEGER NOT NULL
 );
 

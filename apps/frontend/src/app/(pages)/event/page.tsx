@@ -1,6 +1,7 @@
 "use client"
 
 
+import { EventForm } from '@/components/event/EventForm'
 import Window from '@/components/shared/Window'
 import useEvent from '@/data/hooks/useEvent'
 import React from 'react'
@@ -16,13 +17,7 @@ export default function EventPage(): React.JSX.Element {
                 image={event.image}
                 backgroundImage={event.backgroundImage}
             >
-                <span>eventos</span>
-                <span>eventos</span>
-                <span>eventos</span>
-                <span>eventos</span>
-                <span>eventos</span>
-                <span>eventos</span>
-                <span>eventos</span>
+                <EventForm />
             </Window>
         </div>
     )
