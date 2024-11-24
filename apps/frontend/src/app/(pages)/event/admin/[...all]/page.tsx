@@ -2,9 +2,10 @@
 
 import EventDashboard from "@/components/event/EventDashboard";
 import EventFormPassword from "@/components/event/EventFormPassword";
+import useAPI from "@/data/hooks/useApi";
 import { Event, Guest } from "core";
-import events from "core/constants/events";
-import { use, useEffect, useState } from "react";
+import { events } from "core";
+import { use, useCallback, useEffect, useState } from "react";
 
 
 type TAdminProps = {
@@ -13,10 +14,11 @@ type TAdminProps = {
 
 export default function Admin({ params }: TAdminProps): any {
   const adminParams: any = use(params)
+  const { httpPost } = useAPI()
 
   const id = adminParams.all[0]
   const [event, setEvent] = useState<Event | null>(null)
-  const [password, setPassword] = useState<string | null>(adminParams.all[1] ?? null)
+  const [password, setPassword] = useState<string>(adminParams.all[1] ?? "")
 
   const presents = event?.guests.filter((item) => item.isConfirmed) ?? []
   const absents = event?.guests.filter((item) => !item.isConfirmed) ?? []
@@ -31,7 +33,11 @@ export default function Admin({ params }: TAdminProps): any {
     return setEvent(event ?? null)
   }
 
-
+  const loadEvent = useCallback(async () => {
+    if (!id || !password) return
+    const event = await httpPost("/events/access", { id, password })
+    setEvent(event)
+  }, [httpPost, id, password])
 
   useEffect(() => {
     getEvent()
@@ -46,7 +52,11 @@ export default function Admin({ params }: TAdminProps): any {
           absents={absents}
           totalPeople={totalPeople} />
       ) : (
-        <EventFormPassword />
+        <EventFormPassword
+          acessEvent={loadEvent}
+          password={password}
+          setPassword={setPassword}
+        />
       )}
     </div>
   )
