@@ -30,15 +30,13 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
         try {
             const idAndPassword: { id: string, password: string } = JSON.parse(qrcorde)
 
-            const event = await httpPOST("events/access", idAndPassword)
-            if (!event) {
+            const getEvents = await loadEventByLocalStorage(idAndPassword.id, idAndPassword.password)
+            if (!getEvents) {
                 return deleteEvent(idAndPassword.id)
             }
 
             const newEvents = events.filter((event) => event.id !== idAndPassword.id)
-
-            newEvents.push(event)
-
+            newEvents.push(getEvents)
             saveItem("event", newEvents)
             setEvents(newEvents)
 
@@ -46,6 +44,9 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
             alert(error)
         }
     }
+
+
+
 
     function deleteEvent(id: string) {
         const newEvents = events.filter((item) => item.id !== id)

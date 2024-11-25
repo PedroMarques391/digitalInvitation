@@ -31,9 +31,8 @@ export class EventPrisma {
 
     async searchById(
         id: string,
-        complete: boolean = false
+        complete: boolean = false,
     ): Promise<Event | null> {
-
         return this.prisma.event.findUnique({
             where: { id },
             include: { guests: complete }
