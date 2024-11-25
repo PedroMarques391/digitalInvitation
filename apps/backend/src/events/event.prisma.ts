@@ -7,7 +7,6 @@ export class EventPrisma {
     constructor(readonly prisma: PrismaProvider) { }
 
     saveEvent(event: Event) {
-        console.log("prisma.event", event)
         return this.prisma.event.create({
             data: {
                 ...(event as any),
@@ -17,7 +16,6 @@ export class EventPrisma {
     }
 
     saveGuest(event: Event, guest: Guest) {
-        console.log("pristagues", guest)
         return this.prisma.guest.create({
             data: {
                 ...guest,
@@ -35,6 +33,7 @@ export class EventPrisma {
         id: string,
         complete: boolean = false
     ): Promise<Event | null> {
+
         return this.prisma.event.findUnique({
             where: { id },
             include: { guests: complete }

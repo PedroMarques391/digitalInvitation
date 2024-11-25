@@ -12,10 +12,13 @@ export default function useApi() {
             const response = await fetch(URL)
             return extractData(response)
         }, [])
+
     const httpPOST = useCallback(
         async function (path: string, body?: any) {
             const URI = path.startsWith("/") ? path : `/${path}`
             const URL = `${URL_BASE}${URI}`
+
+            console.log(URL)
 
             const response = await fetch(URL, {
                 method: "POST",
@@ -28,10 +31,10 @@ export default function useApi() {
 
 
 
-    function extractData(response: Response) {
+    async function extractData(response: Response) {
         let content: any
         try {
-            content = response.json()
+            content = await response.json()
 
         } catch (error) {
             if (!response.ok) {
@@ -41,7 +44,7 @@ export default function useApi() {
             return null
         }
 
-        return content
+        return await content
     }
     return { httpGET, httpPOST }
 }

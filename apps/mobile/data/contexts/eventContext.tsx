@@ -43,7 +43,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
             setEvents(newEvents)
 
         } catch (error: any) {
-            alert(JSON.stringify(error))
+            alert(error)
         }
     }
 

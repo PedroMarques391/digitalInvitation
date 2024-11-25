@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# **DigitalInvitation - Frontend**  
 
-First, run the development server:
+O **DigitalInvitation Frontend** foi desenvolvido utilizando tecnologias modernas para criar uma experiência responsiva e funcional, garantindo uma navegação fluida tanto em desktops quanto em dispositivos móveis.  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Tecnologias Utilizadas**  
+- **Linguagem**: TypeScript.  
+- **Framework**: React com Next.js.  
+- **Estilização**: TailwindCSS.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **Estrutura de Rotas**  
+O frontend utiliza o poder do Next.js para implementar rotas dinâmicas e estáticas:  
+- **Rota Home**: Página inicial do site, apresentando informações gerais.  
+- **Rota de Eventos**:  
+  - Inclui a **rota de admin** para gerenciar eventos.  
+  - Apresenta a **página de sucesso** ao criar um evento.  
+- **Rota de Convite**:  
+  - Implementada com **navegação dinâmica por alias**, facilitando acesso personalizado.  
+  - Inclui uma página de **agradecimento** para quando o usuário se cadastrar.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **Responsividade**  
+O site foi projetado para ser totalmente responsivo, oferecendo uma experiência adaptada a dispositivos móveis e mantendo a consistência visual em telas de diferentes tamanhos.  
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Imagens do Projeto:  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Tela inicial                                    | Tela de cadastro                               |
+|-------------------------------------------------|------------------------------------------------|
+| <img src="./public/readme/screen1.png" alt="Tela 1" width="400"> | <img src="./public/readme/screen2.png" alt="Tela 2" width="400"> |
 
-## Deploy on Vercel
+| Tela Evento                                     | Tela admin                                     |
+|-------------------------------------------------|------------------------------------------------|
+| <img src="./public/readme/screen3.png" alt="Tela 3" width="400"> | <img src="./public/readme/screen4.png" alt="Tela 4" width="400"> |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Tela Convidados                                 | Tela Agradecimento                             |
+|-------------------------------------------------|------------------------------------------------|
+| <img src="./public/readme/screen5.png" alt="Tela 5" width="400"> | <img src="./public/readme/screen6.png" alt="Tela 4" width="400"> |

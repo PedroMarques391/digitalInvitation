@@ -30,14 +30,12 @@ export class EventsController {
         @Param("alias") alias: string,
         @Body() guest: Guest) {
 
-        console.log("passou")
         const event = await this.repository.searchByAlias(alias)
 
 
         if (!event) throw new HttpException("Evento não encotrado!", 400)
 
         const completeGuest = complementaryGuest(guest)
-        console.log(completeGuest)
         await this.repository.saveGuest(event, completeGuest)
 
     }
