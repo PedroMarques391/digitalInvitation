@@ -1,4 +1,5 @@
 "use client"
+
 import EventInfo from '@/components/event/EventInfo'
 import GuestForm from '@/components/event/GuestForm'
 import Processing from '@/components/shared/Processing'
@@ -15,11 +16,10 @@ export default function Invitation({ params }: TInvitationProps): React.JSX.Elem
   const { event, loadEvent, guest, changeGuest, addGuest } = useEvent()
   const invitationsParams: any = use(params)
 
-  if (!event.alias) return <></>
 
   useEffect(() => {
     loadEvent(invitationsParams.alias)
-  }, [])
+  }, [invitationsParams.alias])
 
   return event?.alias ? (
     <div>

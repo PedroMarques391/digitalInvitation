@@ -11,10 +11,11 @@ export interface IEventDashboardProps {
     className?: string,
     presents?: Guest[],
     absents?: Guest[]
-    totalPeople?: number
+    totalPeople?: number,
+    updateList?: () => void
 }
 
-export default function EventDashboard({ event, presents, totalPeople, absents }: IEventDashboardProps): React.JSX.Element {
+export default function EventDashboard({ event, presents, totalPeople, absents, updateList }: IEventDashboardProps): React.JSX.Element {
 
     if (!presents || !absents) return <></>
 
@@ -36,7 +37,9 @@ export default function EventDashboard({ event, presents, totalPeople, absents }
                     image="/icones/acompanhantes.svg" />
             </div>
 
-            <button className='button blue self-end mt-12'>
+            <button
+                onClick={updateList}
+                className='button blue self-end mt-12'>
                 <span>Atualizar Lista de convidados</span>
             </button>
 

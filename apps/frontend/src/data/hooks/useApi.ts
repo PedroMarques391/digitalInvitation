@@ -15,7 +15,6 @@ export default function useAPI() {
         const uri = path.startsWith("/") ? path : `/${path}`;
         const URL = `${urlBase}${uri}`;
 
-        console.log(body)
         const res = await fetch(URL, {
             method: "POST",
             headers: {
@@ -23,7 +22,7 @@ export default function useAPI() {
             },
             body: body ? JSON.stringify(body) : null,
         });
-        return stractData(res);
+        return await stractData(res);
     }, []);
 
     async function stractData(reposta: Response) {

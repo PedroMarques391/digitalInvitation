@@ -42,21 +42,24 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     }, [event, httpPost, router])
 
     const loadEvent = useCallback(async function (idOrAlias: string) {
+        if (!event) return
         try {
-            const event = await httpGet(`/events/${idOrAlias}`)
+            const newEvent = await httpGet(`/events/${idOrAlias}`)
             setEvent({
-                ...event,
-                date: Data.parser(event.date)
+                ...newEvent,
+                date: Data.parser(newEvent.date)
             })
         } catch (error) {
             console.log(error)
         }
     }, [httpGet, setEvent])
 
-    const addGuest = useCallback(async function () {
-        await httpPost(`/events/${event.alias}/guests`, guest)
-        router.push("/invitation/thanks")
-    }, [httpPost, event, router, guest])
+    const addGuest = useCallback(
+        async function () {
+            await httpPost(`/events/${event.alias}/guest`, guest)
+            console.log(guest)
+            await router.push("/invitation/thanks")
+        }, [httpPost, event, router, guest])
 
     const validateAlias = useCallback(async function () {
         try {
@@ -70,6 +73,8 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (event.alias) validateAlias()
     }, [event?.alias, isValidAlias])
+
+
 
 
     return (

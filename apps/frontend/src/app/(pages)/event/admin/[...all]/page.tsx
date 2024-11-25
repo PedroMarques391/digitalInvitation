@@ -50,7 +50,8 @@ export default function Admin({ params }: TAdminProps): any {
           presents={presents}
           event={event}
           absents={absents}
-          totalPeople={totalPeople} />
+          totalPeople={totalPeople}
+          updateList={getEvent} />
       ) : (
         <EventFormPassword
           acessEvent={loadEvent}

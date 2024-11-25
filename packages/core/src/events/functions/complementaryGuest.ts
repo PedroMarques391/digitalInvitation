@@ -19,8 +19,8 @@ export default function complementaryGuest(
 
   const updateGuest = {
     ...guest,
-    qtdeAcompanhantes: hasCompanions ? numberOfCompanions : 0,
-    possuiAcompanhantes: hasCompanions,
+    numberOfCompanions: hasCompanions ? numberOfCompanions : 0,
+    hasCompanions: hasCompanions,
   };
 
   return updateGuest as Guest;

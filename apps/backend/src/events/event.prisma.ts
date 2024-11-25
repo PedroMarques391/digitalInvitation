@@ -17,6 +17,7 @@ export class EventPrisma {
     }
 
     saveGuest(event: Event, guest: Guest) {
+        console.log("pristagues", guest)
         return this.prisma.guest.create({
             data: {
                 ...guest,
